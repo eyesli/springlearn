@@ -8,7 +8,7 @@ public class AppMain {
 
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(App.class);
-		Object app = context.getBean("app");
+		Object app = context.getBean("lideng");
 		System.out.println("app = " + app);
 
 	}
