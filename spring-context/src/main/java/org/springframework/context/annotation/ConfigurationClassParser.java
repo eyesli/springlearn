@@ -262,6 +262,7 @@ class ConfigurationClassParser {
 	 * @return the superclass, or {@code null} if none found or previously processed
 	 */
 	@Nullable
+	//ImportResource  PropertySource ComponentScan @Import
 	protected final SourceClass doProcessConfigurationClass(
 			ConfigurationClass configClass, SourceClass sourceClass, Predicate<String> filter)
 			throws IOException {
@@ -272,6 +273,7 @@ class ConfigurationClassParser {
 		}
 
 		// Process any @PropertySource annotations
+		// 2.@PropertySource 这一步解析@PropertySource注解，更改配置文件位置时会使用，一般使用默认位置，不咋更改
 		for (AnnotationAttributes propertySource : AnnotationConfigUtils.attributesForRepeatable(
 				sourceClass.getMetadata(), PropertySources.class,
 				org.springframework.context.annotation.PropertySource.class)) {
@@ -561,6 +563,7 @@ class ConfigurationClassParser {
 			this.problemReporter.error(new CircularImportProblem(configClass, this.importStack));
 		}
 		else {
+
 			this.importStack.push(configClass);
 			try {
 				for (SourceClass candidate : importCandidates) {
