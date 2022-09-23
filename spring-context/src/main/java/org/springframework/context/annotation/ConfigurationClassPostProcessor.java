@@ -244,6 +244,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		}
 		this.registriesPostProcessed.add(registryId);
 
+		//TODO 解析配置类
 		processConfigBeanDefinitions(registry);
 	}
 
@@ -320,17 +321,19 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		}
 
 		// Parse each @Configuration class
+		//TODO 构建一个解析器解析配置类
 		ConfigurationClassParser parser = new ConfigurationClassParser(
 				this.metadataReaderFactory, this.problemReporter, this.environment,
 				this.resourceLoader, this.componentScanBeanNameGenerator, registry);
 
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
+		//TODO 解析配置类
 		do {
 			StartupStep processConfig = this.applicationStartup.start("spring.context.config-classes.parse");
 			//这行代码里完成了对@Import注解的导入工作，并对实现ImportBeanDefinitionRegistrar接口的类完成了实例化，
 			// 并把已经创建好的实列放到了ConfigurationClass类的属性importBeanDefinitionRegistrars中
-			//spring解析注解bean的代码
+			//TODO spring解析注解配置类的代码
 			parser.parse(candidates);
 			parser.validate();
 
