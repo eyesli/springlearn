@@ -246,7 +246,7 @@ class ConfigurationClassParser {
 		// Recursively process the configuration class and its superclass hierarchy.
 		SourceClass sourceClass = asSourceClass(configClass, filter);
 		do {
-			//TODO 解析配置类
+			//NOTE 解析配置类
 			sourceClass = doProcessConfigurationClass(configClass, sourceClass, filter);
 		}
 		while (sourceClass != null);
@@ -274,7 +274,7 @@ class ConfigurationClassParser {
 		}
 
 		// Process any @PropertySource annotations
-		// 2.@PropertySource 这一步解析@PropertySource注解，更改配置文件位置时会使用，一般使用默认位置，不咋更改
+		// NOTE 2.@PropertySource 这一步解析@PropertySource注解，更改配置文件位置时会使用，一般使用默认位置，不咋更改
 		for (AnnotationAttributes propertySource : AnnotationConfigUtils.attributesForRepeatable(
 				sourceClass.getMetadata(), PropertySources.class,
 				org.springframework.context.annotation.PropertySource.class)) {
@@ -310,7 +310,7 @@ class ConfigurationClassParser {
 		}
 
 		// Process any @Import annotations
-		//TODO 解析@Import annotations
+		//NOTE 解析@Import annotations
 		processImports(configClass, sourceClass, getImports(sourceClass), filter, true);
 
 		// Process any @ImportResource annotations

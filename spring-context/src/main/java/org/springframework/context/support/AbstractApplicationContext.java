@@ -561,11 +561,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
 				// Invoke factory processors registered as beans in the context.
-				// TODO 扫描bean 的 BeanDefinitionRegistry 和beanFactory 后置处理器 非常重要
+				// NOTE 扫描bean 的 BeanDefinitionRegistry 和beanFactory 后置处理器 非常重要
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
-				//TODO 扫描BeanPostProcessors扫描到了就注册排序
+				//NOTE 扫描BeanPostProcessors扫描到了就注册排序
 				registerBeanPostProcessors(beanFactory);
 				beanPostProcess.end();
 
@@ -633,12 +633,12 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		}
 
 		// Initialize any placeholder property sources in the context environment.
-		// TODO 设置环境变量
+		// NOTE 设置环境变量
 		initPropertySources();
 
 		// Validate that all properties marked as required are resolvable:
 		// see ConfigurablePropertyResolver#setRequiredProperties
-		//TODO 校验环境变量
+		//NOTE 校验环境变量
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
@@ -687,14 +687,14 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		if (!shouldIgnoreSpel) {
 			beanFactory.setBeanExpressionResolver(new StandardBeanExpressionResolver(beanFactory.getBeanClassLoader()));
 		}
-		//TODO 类型转换器
+		//NOTE 类型转换器
 		beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));
 
 		// Configure the bean factory with context callbacks.
-		//TODO 处理回调的
+		//NOTE 处理回调的
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(this));
 
-		//TODO Set方法注入bean有关，set方法是接口提供的
+		//NOTE Set方法注入bean有关，set方法是接口提供的
 		beanFactory.ignoreDependencyInterface(EnvironmentAware.class);
 		beanFactory.ignoreDependencyInterface(EmbeddedValueResolverAware.class);
 		beanFactory.ignoreDependencyInterface(ResourceLoaderAware.class);

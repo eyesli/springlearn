@@ -117,7 +117,7 @@ public class EventListenerMethodProcessor
 	}
 
 
-	//TODO spring 的回调接口。 回调方法里面的 processBean方法比较关键 对EventListener进行了处理
+	//NOTE spring 的回调接口。 回调方法里面的 processBean方法比较关键 对EventListener进行了处理
 	@Override
 	public void afterSingletonsInstantiated() {
 		ConfigurableListableBeanFactory beanFactory = this.beanFactory;
@@ -152,7 +152,7 @@ public class EventListenerMethodProcessor
 						}
 					}
 					try {
-						//TODO 对EventListener进行了处理
+						//NOTE 对EventListener进行了处理
 						processBean(beanName, type);
 					}
 					catch (Throwable ex) {
@@ -198,7 +198,7 @@ public class EventListenerMethodProcessor
 					for (EventListenerFactory factory : factories) {
 						if (factory.supportsMethod(method)) {
 							Method methodToUse = AopUtils.selectInvocableMethod(method, context.getType(beanName));
-							//TODO EventListener 把EventListener包装成applicationListener对象
+							//NOTE EventListener 把EventListener包装成applicationListener对象
 							ApplicationListener<?> applicationListener =
 									factory.createApplicationListener(beanName, targetType, methodToUse);
 							if (applicationListener instanceof ApplicationListenerMethodAdapter) {

@@ -379,19 +379,19 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 
 		if (txAttr == null || !(ptm instanceof CallbackPreferringPlatformTransactionManager)) {
 			// Standard transaction demarcation with getTransaction and commit/rollback calls.
-			//TODO 开启一个事务
+			//NOTE 开启一个事务
 			TransactionInfo txInfo = createTransactionIfNecessary(ptm, txAttr, joinpointIdentification);
 
 			Object retVal;
 			try {
 				// This is an around advice: Invoke the next interceptor in the chain.
 				// This will normally result in a target object being invoked.
-				//TODO 执行被代理方法
+				//NOTE 执行被代理方法
 				retVal = invocation.proceedWithInvocation();
 			}
 			catch (Throwable ex) {
 				// target invocation exception
-				//TODO 异常回滚
+				//NOTE 异常回滚
 				completeTransactionAfterThrowing(txInfo, ex);
 				throw ex;
 			}
@@ -407,7 +407,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 				}
 			}
 
-			//TODO 正常提交
+			//NOTE 正常提交
 			commitTransactionAfterReturning(txInfo);
 			return retVal;
 		}
@@ -596,7 +596,7 @@ public abstract class TransactionAspectSupport implements BeanFactoryAware, Init
 		TransactionStatus status = null;
 		if (txAttr != null) {
 			if (tm != null) {
-				//TODO 开启事务
+				//NOTE 开启事务
 				status = tm.getTransaction(txAttr);
 			}
 			else {
