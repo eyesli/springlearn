@@ -331,7 +331,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		//NOTE 解析配置类
 		do {
 			StartupStep processConfig = this.applicationStartup.start("spring.context.config-classes.parse");
-			//这行代码里完成了对@Import注解的导入工作，并对实现ImportBeanDefinitionRegistrar接口的类完成了实例化，
+			//NOTE 这行代码里完成了对@Import注解的导入工作，并对实现ImportBeanDefinitionRegistrar接口的类完成了实例化，
 			// 并把已经创建好的实列放到了ConfigurationClass类的属性importBeanDefinitionRegistrars中
 			//NOTE spring解析注解配置类的代码
 			parser.parse(candidates);
@@ -347,12 +347,13 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 						registry, this.sourceExtractor, this.resourceLoader, this.environment,
 						this.importBeanNameGenerator, parser.getImportRegistry());
 			}
-			//NOTE  把配置类
+			//NOTE  把配置类以及下面的@Bean 解析成BeanDefinition
 			this.reader.loadBeanDefinitions(configClasses);
 			alreadyParsed.addAll(configClasses);
 			processConfig.tag("classCount", () -> String.valueOf(configClasses.size())).end();
 
 			candidates.clear();
+			//NOTE  是不是有新的BeanDefinition
 			if (registry.getBeanDefinitionCount() > candidateNames.length) {
 				String[] newCandidateNames = registry.getBeanDefinitionNames();
 				Set<String> oldCandidateNames = new HashSet<>(Arrays.asList(candidateNames));
@@ -363,6 +364,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 				for (String candidateName : newCandidateNames) {
 					if (!oldCandidateNames.contains(candidateName)) {
 						BeanDefinition bd = registry.getBeanDefinition(candidateName);
+						//NOTE   新的BeanDefinition是不是一个配置类
 						if (ConfigurationClassUtils.checkConfigurationClassCandidate(bd, this.metadataReaderFactory) &&
 								!alreadyParsedClasses.contains(bd.getBeanClassName())) {
 							candidates.add(new BeanDefinitionHolder(bd, candidateName));
