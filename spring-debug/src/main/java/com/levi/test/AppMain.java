@@ -1,6 +1,7 @@
 package com.levi.test;
 
 import com.levi.test.common.lideng;
+import com.levi.test.service.LidengService;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -8,13 +9,14 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 
+@EnableTransactionManagement
 public class AppMain {
 	public static void main(String[] args) {
 
 
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(App.class);
-		Object app = context.getBean("lidengService");
-		System.out.println("lidengService = " + app);
+		LidengService lidengService = context.getBean("lidengService", LidengService.class);
+		lidengService.test();
 
 		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 

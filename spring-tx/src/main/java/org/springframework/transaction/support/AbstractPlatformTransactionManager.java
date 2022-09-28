@@ -21,7 +21,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.List;
 
-import com.sun.tools.javac.comp.Todo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
