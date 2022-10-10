@@ -241,7 +241,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 	}
 
 
-	//笔记点postProcessMergedBeanDefinition先执行，找注入点
+	//note 笔记点postProcessMergedBeanDefinition先执行，找注入点
 	@Override
 	public void postProcessMergedBeanDefinition(RootBeanDefinition beanDefinition, Class<?> beanType, String beanName) {
 		InjectionMetadata metadata = findAutowiringMetadata(beanName, beanType, null);
@@ -396,7 +396,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 	//笔记postProcessProperties
 	@Override
 	public PropertyValues postProcessProperties(PropertyValues pvs, Object bean, String beanName) {
-		//找到所有的注入点
+		//note 找到所有的注入点
 		InjectionMetadata metadata = findAutowiringMetadata(beanName, bean.getClass(), pvs);
 		try {
 			metadata.inject(bean, beanName, pvs);
@@ -454,7 +454,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 					if (metadata != null) {
 						metadata.clear(pvs);
 					}
-					//解析注入点并且缓存
+					//note解析注入点并且缓存
 					metadata = buildAutowiringMetadata(clazz);
 					this.injectionMetadataCache.put(cacheKey, metadata);
 				}
@@ -475,6 +475,7 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 			final List<InjectionMetadata.InjectedElement> currElements = new ArrayList<>();
 
 			ReflectionUtils.doWithLocalFields(targetClass, field -> {
+				//NOTE 找类上是不是有Autowired value inject注解
 				MergedAnnotation<?> ann = findAutowiredAnnotation(field);
 				if (ann != null) {
 					if (Modifier.isStatic(field.getModifiers())) {
@@ -524,6 +525,10 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 	@Nullable
 	private MergedAnnotation<?> findAutowiredAnnotation(AccessibleObject ao) {
 		MergedAnnotations annotations = MergedAnnotations.from(ao);
+		/**
+		 * note this.autowiredAnnotationTypes.add(Autowired.class);
+		 * 		this.autowiredAnnotationTypes.add(Value.class);
+		 */
 		for (Class<? extends Annotation> type : this.autowiredAnnotationTypes) {
 			MergedAnnotation<?> annotation = annotations.get(type);
 			if (annotation.isPresent()) {
@@ -636,15 +641,17 @@ public class AutowiredAnnotationBeanPostProcessor implements SmartInstantiationA
 				}
 				catch (NoSuchBeanDefinitionException ex) {
 					// Unexpected removal of target bean for cached argument -> re-resolve
-					//核心方法
+					//note 核心方法
 					value = resolveFieldValue(field, bean, beanName);
 				}
 			}
 			else {
+				//note 找注入值
 				value = resolveFieldValue(field, bean, beanName);
 			}
 			if (value != null) {
 				ReflectionUtils.makeAccessible(field);
+				//note 注入
 				field.set(bean, value);
 			}
 		}
