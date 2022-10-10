@@ -7,11 +7,11 @@ import org.springframework.stereotype.Component;
 public class lidengFactoryBean implements FactoryBean {
 	@Override
 	public Object getObject() {
-		return new lideng();
+		return new Lideng();
 	}
 
 	@Override
 	public Class<?> getObjectType() {
-		return lideng.class;
+		return Lideng.class;
 	}
 }

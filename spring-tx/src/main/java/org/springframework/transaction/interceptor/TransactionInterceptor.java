@@ -109,6 +109,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
 
 	@Override
 	@Nullable
+	//NOTE 事务入口
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		// Work out the target class: may be {@code null}.
 		// The TransactionAttributeSource should be passed the target class
@@ -116,6 +117,7 @@ public class TransactionInterceptor extends TransactionAspectSupport implements 
 		Class<?> targetClass = (invocation.getThis() != null ? AopUtils.getTargetClass(invocation.getThis()) : null);
 
 		// Adapt to TransactionAspectSupport's invokeWithinTransaction...
+		//NOTE 事务入口
 		return invokeWithinTransaction(invocation.getMethod(), targetClass, new CoroutinesInvocationCallback() {
 			@Override
 			@Nullable

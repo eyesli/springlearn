@@ -452,6 +452,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		Object result = existingBean;
 		for (BeanPostProcessor processor : getBeanPostProcessors()) {
+			//
 			Object current = processor.postProcessAfterInitialization(result, beanName);
 			if (current == null) {
 				return result;
@@ -537,7 +538,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			 * note 之前只是创建了一个class，还没实例化。现在是实例化之前的操作 BeanPostProcessors本身只支持初始化之前和初始化之后
 			 * 			  BeanPostProcessors 还有很多子接口。可以有 初始化之前，初始化之後，(initializeBean 初始化)实例化之前、实例化之后
 			 * 			InstantiationAwareBeanPostProcessor 接口回调 这里可以AOP，有AOP实现
-			 * 		todo 如果被代理了就直接返回了吗 AnnotationAwareAspectJAutoProxyCreator 继承AbstractAutoProxyCreator 实现了 InstantiationAwareBeanPostProcessor
+			 *
 			 * 	代理不是在这里进行的，循环依赖进行的
 			 */
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
@@ -1803,7 +1804,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 	 * @see #invokeInitMethods
 	 * @see #applyBeanPostProcessorsAfterInitialization
 	 */
-	protected Object initializeBean(String beanName, Object bean, @Nullable RootBeanDefinition mbd) {
+	protected Object  initializeBean(String beanName, Object bean, @Nullable RootBeanDefinition mbd) {
 		if (System.getSecurityManager() != null) {
 			AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
 				invokeAwareMethods(beanName, bean);

@@ -1,7 +1,10 @@
 package com.levi.test.common;
 
 
-public class lideng {
+import org.springframework.stereotype.Component;
+
+@Component
+public class Lideng {
 
 
 	private String name;
